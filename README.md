@@ -1,9 +1,6 @@
-Got it ✅ You want the README styled exactly for **GitHub Markdown** (with proper headings, tables, code blocks, and emojis). Here’s the **GitHub-ready README.md** you can copy-paste directly:
-
----
 
 ```markdown
-# 🚀 logProject  
+# 🚀 MyBlogProject  
 A **Spring Boot-based Blog Management Application** with **REST APIs, OAuth2 authentication, role-based access control, AOP logging, and global exception handling.**  
 The project demonstrates best practices in **layered architecture, exception management, database schema design, and test-driven development.**  
 
