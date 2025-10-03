@@ -38,44 +38,48 @@ The project demonstrates best practices in layered architecture, exception manag
 ## 📂 Project Structure
 ```
 
-src/
-└── main/
-├── java/com/example/demo/
-│    ├── BlogProjectApplication.java      # Main Spring Boot application
-│    ├── SecurityConfiguration.java       # Spring Security & JWT config
-│    │
-│    ├── controller/
-│    │    ├── BlogsController.java        # Blog REST API endpoints
-│    │    └── UserController.java         # User management APIs
-│    │
-│    ├── service/
-│    │    ├── BlogsService.java           # Blog business logic
-│    │    └── UserService.java            # User management logic
-│    │
-│    ├── repository/
-│    │    ├── BlogRepository.java         # Blog JPA repository
-│    │    ├── UserRepository.java         # User JPA repository
-│    │    └── entities/
-│    │         ├── Blog.java              # Blog entity
-│    │         ├── User.java              # User entity
-│    │         └── Role.java              # Role entity
-│    │
-│    ├── security/
-│    │    ├── JwtTokenProvider.java       # JWT utilities
-│    │    ├── JwtAuthenticationFilter.java# Authentication filter
-│    │    └── CustomUserDetailsService.java # Loads user details
-│    │
-│    ├── exceptions/
-│    │    ├── GlobalExceptionHandler.java # Handles all exceptions
-│    │    ├── ResourceNotFoundException.java
-│    │    └── BadRequestException.java
-│    │
-│    └── aspect/
-│         └── LoggingAspect.java          # Logs API calls
-│
-└── resources/
-├── application.properties           # App configuration
-└── schema.sql                       # DB schema (if any)
+Selected Files Directory Structure:
+
+./
+└── src
+    ├── main
+    │   └── java
+    │       └── com
+    │           └── example
+    │               └── demo
+    │                   ├── Aspect
+    │                   │   └── LoggingAspect.java
+    │                   ├── Controller
+    │                   │   ├── BlogsController.java
+    │                   │   └── UserController.java
+    │                   ├── Exceptions
+    │                   │   ├── BadException.java
+    │                   │   ├── GlobalExceptionHandler.java
+    │                   │   └── ResourceNotFoundException.java
+    │                   ├── Repository
+    │                   │   ├── BlogRepository.java
+    │                   │   ├── Blogs.java
+    │                   │   ├── UserRepository.java
+    │                   │   └── Users.java
+    │                   ├── Service
+    │                   │   ├── BlogsService.java
+    │                   │   └── UserService.java
+    │                   ├── BlogProjectApplication.java
+    │                   └── SecurityConfiguration.java
+    └── test
+        └── java
+            └── com
+                └── example
+                    └── demo
+                        ├── Controller
+                        │   ├── BlogControllerTest.java
+                        │   └── ControllerIntegrationTest.java
+                        ├── Repository
+                        │   └── BlogRepositoryTest.java
+                        ├── Service
+                        │   └── BlogServiceTest.java
+                        └── BlogProjectApplicationTests.java
+
 
 ````
 
