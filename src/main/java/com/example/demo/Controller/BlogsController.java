@@ -43,11 +43,7 @@ public class BlogsController {
     })
     @PostMapping
     public ResponseEntity<Blogs> addBlogs(
-            @RequestBody @io.swagger.v3.oas.annotations.parameters.RequestBody(
-                    description = "Blog post to be created",
-                    required = true,
-                    content = @Content(schema = @Schema(implementation = Blogs.class))
-            ) Blogs blog) {
+            @RequestBody Blogs blog) {
         Blogs blogs = blogsService.addBlog(blog);
         return ResponseEntity.status(HttpStatus.CREATED).body(blogs);
     }
@@ -67,6 +63,7 @@ public class BlogsController {
     @Operation(summary = "Delete blog post by ID")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Blog post deleted"),
+        @ApiResponse(responseCode = "403", description = "Forbidden"),
         @ApiResponse(responseCode = "404", description = "Blog post not found", content = @Content)
     })
     @DeleteMapping("/{blogId}")

@@ -4,88 +4,93 @@ import java.time.LocalDateTime;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="Blogs")
+@Table(name = "Blogs")
 public class Blogs {
 
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	
-	@Column(name = "Creater",nullable=false)
-	private String name;
-	
-	@CreationTimestamp
-	@Column(name = "Date",nullable=false,updatable = false)
-	private LocalDateTime date;
-	
-	@Column(name = "Topic",nullable=false )
-	private String topic;
-	
-	
-	@Column(name = "Content",nullable=false)
-	private String content;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-public Blogs()
-{
-	
-}
-	public Long getId() {
-		return id;
-	}
+    @Column(name = "Creater", nullable = false)
+    private String name;
 
+    @CreationTimestamp
+    @Column(name = "Date", nullable = false, updatable = false)
+    private LocalDateTime date;
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    @Column(name = "Topic", nullable = false)
+    private String topic;
 
+    @Column(name = "Content", nullable = false)
+    private String content;
 
-	public String getName() {
-		return name;
-	}
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    @JsonIgnore
+    private Users author;
 
+    public Blogs() {
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    }
 
+    public Long getId() {
+        return id;
+    }
 
-	public LocalDateTime getDate() {
-		return date;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
+    public String getName() {
+        return name;
+    }
 
-	public void setDate(LocalDateTime date) {
-		this.date = date;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
+    public LocalDateTime getDate() {
+        return date;
+    }
 
-	public String getTopic() {
-		return topic;
-	}
+    public void setDate(LocalDateTime date) {
+        this.date = date;
+    }
 
+    public String getTopic() {
+        return topic;
+    }
 
-	public void setTopic(String topic) {
-		this.topic = topic;
-	}
+    public void setTopic(String topic) {
+        this.topic = topic;
+    }
 
+    public String getContent() {
+        return content;
+    }
 
-	public String getContent() {
-		return content;
-	}
+    public void setContent(String content) {
+        this.content = content;
+    }
+    
+    public Users getAuthor() {
+        return author;
+    }
 
-
-	public void setContent(String content) {
-		this.content = content;
-	}
-
-
+    public void setAuthor(Users author) {
+        this.author = author;
+    }
 }

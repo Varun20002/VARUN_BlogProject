@@ -10,12 +10,15 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.example.demo.Repository.BlogRepository;
 import com.example.demo.Repository.Blogs;
+import com.example.demo.Repository.Users;
+import com.example.demo.Repository.UserRepository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +28,12 @@ public class BlogServiceTest {
 
 	@Mock
 	BlogRepository blogRepository;
+	
+	@Mock
+	UserRepository userRepository;
+	
+	@Mock
+	Principal principal;
 	
 	@InjectMocks
 	BlogsService blogsService;
@@ -74,6 +83,12 @@ public class BlogServiceTest {
 	@DisplayName("testing adding the post operation")
 	public void addBlog()
 	{
+		// Setup test data
+		Users testUser = new Users();
+		testUser.setId(1L);
+		testUser.setUsername("testuser");
+		testUser.setEmail("test@example.com");
+		testUser.setRole("USER");
 		
 		Blogs blog1 = new Blogs();
 		blog1.setId(1L);
@@ -81,10 +96,16 @@ public class BlogServiceTest {
 		blog1.setTopic("Adding");
 		blog1.setContent("Adding operation Test");
 		blog1.setDate(LocalDateTime.parse("2025-09-14T16:44:07"));
-		 LocalDateTime expected = LocalDateTime.parse("2025-09-14T16:44:07");
+		blog1.setAuthor(testUser);
+		
+		LocalDateTime expected = LocalDateTime.parse("2025-09-14T16:44:07");
+		
+		// Mock the principal and user repository
+		when(principal.getName()).thenReturn("testuser");
+		when(userRepository.findByUsername("testuser")).thenReturn(Optional.of(testUser));
 		when(blogRepository.save(blog1)).thenReturn(blog1);
 		
-		var saved = blogsService.addBlog(blog1);
+		var saved = blogsService.addBlog(blog1, principal);
 		
 		assertThat(saved).isNotNull();
 		assertThat(saved.getId()).isEqualTo(1L);
@@ -92,6 +113,7 @@ public class BlogServiceTest {
 		assertThat(saved.getTopic()).isEqualTo("Adding");
 		assertThat(saved.getContent()).isEqualTo("Adding operation Test");
 		assertThat(saved.getDate()).isEqualTo(expected);
+		assertThat(saved.getAuthor()).isEqualTo(testUser);
 		
 	}
 	
