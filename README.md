@@ -1,6 +1,4 @@
-
-```markdown
-# 🚀 logProject
+# 🚀 BlogProject
 A Spring Boot-based Blog Management Application with REST APIs, OAuth2 authentication, role-based access control, AOP logging, and global exception handling.  
 The project demonstrates best practices in layered architecture, exception management, database schema design, and test-driven development.
 
@@ -36,8 +34,8 @@ The project demonstrates best practices in layered architecture, exception manag
 ---
 
 ## 📂 Project Structure
-```
 
+```
 Selected Files Directory Structure:
 
 ./
@@ -79,9 +77,7 @@ Selected Files Directory Structure:
                         ├── Service
                         │   └── BlogServiceTest.java
                         └── BlogProjectApplicationTests.java
-
-
-````
+```
 
 ---
 
@@ -91,7 +87,7 @@ Selected Files Directory Structure:
 ```bash
 git clone https://github.com/Varun2002/VARUN_BlogProject.git
 cd BlogProject
-````
+```
 
 ### 2️⃣ Configure the Database
 
@@ -178,4 +174,3 @@ Includes:
 * Run locally with Gradle
 * Dockerized for containerized deployment
 * Environment-specific configurations supported
-
