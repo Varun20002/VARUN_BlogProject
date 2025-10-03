@@ -20,7 +20,7 @@ The project demonstrates best practices in **layered architecture**, **security 
 
 ## 🛠️ Tech Stack
 
-- **Java 21**  
+- **Java 17**  
 - **Spring Boot 3.x**  
 - **Spring Data JPA**  
 - **Spring Security** with OAuth2
@@ -28,7 +28,7 @@ The project demonstrates best practices in **layered architecture**, **security 
 - **AOP (AspectJ)**  
 - **JUnit & Mockito** for testing  
 - **Gradle** for build and dependency management  
-- **MySQL/H2 Database** (configurable in `application.properties`)
+- **H2 Database** (in-memory for testing)
 
 ---
 
@@ -36,8 +36,8 @@ The project demonstrates best practices in **layered architecture**, **security 
 
 ```
 src/main/java/com/example/demo
-│── BlogProjectApplication.java    # Main Spring Boot application
-│── SecurityConfiguration.java     # Spring Security & OAuth2 config
+├── BlogProjectApplication.java    # Main Spring Boot application
+├── SecurityConfiguration.java     # Spring Security & OAuth2 config
 │
 ├── Controller/
 │   ├── BlogsController.java       # Blog REST API endpoints
@@ -82,7 +82,7 @@ cd VARUN_BlogProject
 ./gradlew bootRun
 ```
 
-The app will start on [http://localhost:8080](http://localhost:8080)
+👉 The app will start at: [http://localhost:8080](http://localhost:8080)
 
 ---
 
@@ -93,17 +93,17 @@ The app will start on [http://localhost:8080](http://localhost:8080)
 |--------|------------------|--------------------|--------------|
 | GET    | /blogs           | Fetch all blogs    | Public |
 | GET    | /blogs/{id}      | Fetch blog by ID   | Public |
-| POST   | /blogs           | Create new blog    | Authenticated |
-| DELETE | /blogs/{id}      | Delete blog        | Admin or Owner |
+| POST   | /blogs           | Create new blog    | Public |
+| DELETE | /blogs/{id}      | Delete blog        | Public |
 
 ### User Management
 | Method | Endpoint         | Description         | Access Level |
 |--------|------------------|--------------------|--------------|
-| GET    | /users           | Fetch all users    | Authenticated |
-| GET    | /users/{id}      | Fetch user by ID   | Authenticated |
+| GET    | /users           | Fetch all users    | Public |
+| GET    | /users/{id}      | Fetch user by ID   | Public |
 | POST   | /users           | Create new user    | Public |
-| PUT    | /users/{id}      | Update user        | Authenticated |
-| DELETE | /users/{id}      | Delete user        | Admin |
+| PUT    | /users/{id}      | Update user        | Public |
+| DELETE | /users/{id}      | Delete user        | Public |
 
 ---
 
@@ -239,6 +239,26 @@ spring.security.oauth2.client.registration.google.client-secret=your-client-secr
 
 ### OAuth2 Configuration
 The application is configured for OAuth2 authentication. Configure your OAuth2 provider settings as needed.
+=======
+### Authentication & Users
+
+| Method | Endpoint            | Description                  |
+| ------ | ------------------- | ---------------------------- |
+| POST   | `/auth/register`    | Register a new user          |
+| POST   | `/auth/login`       | Authenticate & get JWT token |
+| GET    | `/users/{id}`       | Get user profile             |
+| PUT    | `/users/{id}`       | Update user profile          |
+| POST   | `/users/{id}/roles` | Assign roles to user         |
+
+### Blogs
+
+| Method | Endpoint      | Description                     |
+| ------ | ------------- | ------------------------------- |
+| GET    | `/blogs`      | Fetch all blogs (public)        |
+| GET    | `/blogs/{id}` | Fetch blog by ID                |
+| POST   | `/blogs`      | Create new blog (auth required) |
+| PUT    | `/blogs/{id}` | Update blog (owner/admin only)  |
+| DELETE | `/blogs/{id}` | Delete blog (owner/admin only)  |
 
 ---
 
@@ -301,7 +321,7 @@ java -jar build/libs/BlogProject-0.0.1-SNAPSHOT.jar
 
 ### Docker Deployment
 ```dockerfile
-FROM openjdk:21-jdk-slim
+FROM openjdk:17-jdk-slim
 COPY build/libs/BlogProject-0.0.1-SNAPSHOT.jar app.jar
 EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "/app.jar"]
